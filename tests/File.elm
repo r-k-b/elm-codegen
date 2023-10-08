@@ -4,6 +4,7 @@ module File exposing (suite)
 
 import Elm
 import Elm.Expect
+import Gen.BadModuleNamedWith
 import Test exposing (Test, describe, test)
 
 
@@ -92,6 +93,26 @@ testFn1 arg =
 testFn2 : arg -> arg
 testFn2 arg =
     arg
+"""
+            ]
+        , describe "Installed code with import aliases"
+            [ test "should try to import the module, not the alias" <|
+                \_ ->
+                    Elm.Expect.fileContentAs
+                        (Elm.file [ "Test" ]
+                            [ Elm.declaration "someDecoder" <|
+                                Gen.BadModuleNamedWith.dummyDecoder
+                            ]
+                        )
+                        """module Test exposing (..)
+
+import BadModuleNamedWith
+import Json.Decode as JD
+
+
+someDecoder : JD.Decoder String
+someDecoder =
+    BadModuleNamedWith.dummyDecoder
 """
             ]
         ]

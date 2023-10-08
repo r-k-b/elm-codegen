@@ -57,7 +57,7 @@ config =
     , NoPrematureLetComputation.rule
     , NoUnused.CustomTypeConstructors.rule []
     , NoUnused.CustomTypeConstructorArgs.rule
-    , NoUnused.Exports.rule
+    , NoUnused.Exports.rule |> Rule.ignoreErrorsForFiles [ "tests/BadModuleNamedWith.elm" ]
     , NoUnused.Parameters.rule
     , NoUnused.Patterns.rule
     , NoUnused.Variables.rule

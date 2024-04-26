@@ -164,9 +164,11 @@ async function run_generator(output_dir: string, moduleName: string, elm_source:
 
 function generate(debug: boolean, elm_file: string, moduleName: string, output_dir: string, cwd: string, flags: any) {
   try {
+    console.log("generate", {debug, elm_file, moduleName, output_dir, cwd, flags})
     const data = elm_compiler.compileToStringSync([elm_file], {
       cwd: cwd,
       optimize: !debug,
+      verbose: true,
       processOpts: { stdio: [null, null, "inherit"] },
     })
 
